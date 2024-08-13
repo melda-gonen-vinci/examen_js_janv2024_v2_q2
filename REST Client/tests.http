@@ -1,0 +1,145 @@
+@baseUrl = http://localhost:3000
+
+### Create the pinkLady user
+POST {{baseUrl}}/auths/register
+Content-Type: application/json
+
+{
+    "username":"pinkLady",
+    "password":"pinkLady"
+}
+
+### Create the greenMan user
+POST {{baseUrl}}/auths/register
+Content-Type: application/json
+
+{
+    "username":"greenMan",
+    "password":"greenMan"
+}
+
+### 1. Créer une évaluation pour pinkLady avec un score correct
+
+### Login the pinkLady user
+# @name pinkLady
+POST {{baseUrl}}/auths/login
+Content-Type: application/json
+
+{
+    "username":"pinkLady",
+    "password":"pinkLady"
+}
+
+### Create a new evaluation
+POST {{baseUrl}}/evaluations
+Content-Type: application/json
+Authorization: {{pinkLady.response.body.token}}
+
+{
+    "id": 1,
+    "score": 5
+}
+
+### 2. Créer une évaluation pour greenMan avec un score correct
+
+### Login the greenMan user
+# @name greenMan
+POST {{baseUrl}}/auths/login
+Content-Type: application/json
+
+{
+    "username":"greenMan",
+    "password":"greenMan"
+}
+
+### Create a new evaluation
+POST {{baseUrl}}/evaluations
+Content-Type: application/json
+Authorization: {{greenMan.response.body.token}}
+
+{
+    "id": 2,
+    "score": 5
+}
+
+### 3. Créer une évaluation pour pinkLady avec un score incorrect
+
+### Login the pinkLady user
+# @name pinkLady
+POST {{baseUrl}}/auths/login
+Content-Type: application/json
+
+{
+    "username":"pinkLady",
+    "password":"pinkLady"
+}
+
+### Create a new evaluation
+POST {{baseUrl}}/evaluations
+Content-Type: application/json
+Authorization: {{pinkLady.response.body.token}}
+
+{
+    "id": 3,
+    "score": 999999
+}
+
+### 4. Créer une évaluation pour pinkLady avec une citation incorrect
+
+### Login the greenMan user
+# @name pinkLady
+POST {{baseUrl}}/auths/login
+Content-Type: application/json
+
+{
+    "username":"pinkLady",
+    "password":"pinkLady"
+}
+
+### Create a new evaluation
+POST {{baseUrl}}/evaluations
+Content-Type: application/json
+Authorization: {{greenMan.response.body.token}}
+
+{
+    "id": 9999999,
+    "score": 5
+}
+
+### 5. Créer une évaluation pour greenMan qui existe déjà
+
+### Login the greenMan user
+# @name greenMan
+POST {{baseUrl}}/auths/login
+Content-Type: application/json
+
+{
+    "username":"greenMan",
+    "password":"greenMan"
+}
+
+### Create a new existing evaluation
+POST {{baseUrl}}/evaluations
+Content-Type: application/json
+Authorization: {{greenMan.response.body.token}}
+
+{
+    "id": 2,
+    "score": 5
+}
+
+### 6. Créer une évaluation pour un utilisateur anonyme
+
+### Create a new evaluation
+POST {{baseUrl}}/evaluations
+Content-Type: application/json
+
+{
+    "id": 4,
+    "score": 5
+}
+
+
+
+
+
